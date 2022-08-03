@@ -148,7 +148,7 @@
 // спочатку черезfor
 // потім через join
 
-const friends = ["Mango", "Poly", "Kiwi", "Alex"];
+// const friends = ["Mango", "Poly", "Kiwi", "Alex"];
 // let string = '';
 
 // // цикл for
@@ -166,6 +166,110 @@ const friends = ["Mango", "Poly", "Kiwi", "Alex"];
 // console.log(string);
 
 // ------------------------------Join------------------------------------
-const string = friends.join('-');
+// const string = friends.join('-');
 
-console.log(string);
+// console.log(string);
+
+
+// -----------------------------Задача 6-------------------------------------
+// написати скрипт, що заміняє регістр кожного символу в рядку на протилежний
+
+// const string = 'JavaScript';
+
+// const letters = string.split('');
+// let invertedString = '';
+// console.log(letters);
+
+// for (const letter of letters) {
+//     console.log(letter);
+
+//     //     if (letter === letter.toLowerCase()) {
+//     //         console.log('Ця буква в нижньому регістрі', letter);
+
+//     //         invertedString += letter.toUpperCase();
+//     //     } else {
+//     //         invertedString += letter.toLowerCase();
+//     //     }
+//     // }
+// // ------------------або за допомогою тернарного виразу------------------------------
+//     invertedString += letter === letter.toLowerCase() ? letter.toUpperCase() :letter.toLowerCase();
+    
+// }
+
+// console.log(invertedString);
+
+// -----------------------------Задача 7-------------------------------------
+// робимо slug в URL з назви статті (наприклад на dev.to)
+// заголовок статті складається тільки з букв та пробілів
+
+// -нормалізуємо рядок
+// -розбиваємо по словам
+// -зшиваємо в рядок з роздільниками
+
+// const title = 'Top 10 benefits of React framework';
+
+// // const normalizedTitle = title.toLowerCase();
+// // console.log(normalizedTitle);
+
+// // const words = normalizedTitle.split(' ');
+// // console.log(words);
+
+// // const slug = words.join('-');
+// // console.log(slug);
+
+// // -------або так---------------
+// const slug = title.toLowerCase().split(' ').join('-');
+
+// console.log(slug);
+
+// -----------------------------Задача 8-------------------------------------
+// напиши скрипт який рахує суму елементів 2-х масивів
+
+// const array1 = [5, 10, 15, 20];
+// const array2 = [10, 20, 30];
+
+// let total = 0;
+// const numbers = array1.concat(array2);
+// console.log(numbers);
+
+// for (const number of numbers) {
+//     total += number;
+// }
+// console.log(total);
+
+// -----------------------------Задача 9-------------------------------------
+// працюємо з колекцією карток в трелло
+// метод splice
+// видалити
+// додати
+// обновити
+
+// const cards = ["Картка - 1", "Картка - 2", "Картка - 3", "Картка - 4", "Картка - 5", "Картка - 6",];
+
+// console.table(cards);
+
+// // -------------------видалення елементів по індексу indexOf()--------------------------------
+// const cardToRemove = "Картка - 3";
+// const index = cards.indexOf(cardToRemove);
+
+// console.log(index);
+
+// cards.splice(index, 1);
+// console.table(cards);
+
+// // ------------------додавання (добавка) елементів по індексу indexOf()------------------------
+
+// // const cardToInsert = "Картка - 6";
+// // const index = 3;
+
+// // cards.splice(1, 0, 5, 10, 20);
+// // console.table(cards);
+
+// // ------------------оновлення  елементів по індексу ------------------------
+// const cardToUpdate = "Картка - 4";
+
+// const index = cards.indexOf(cardToUpdate);
+// console.log(index);
+// cards.splice(index, 1, "Оновлена картка - 4");
+
+// console.table(cards);
