@@ -1312,45 +1312,239 @@
 // Досі ми розглядали об'єкти тільки як сховища взаємопов'язаних даних, наприклад, інформація про книгу тощо.
 //   Об'єкти-сховища, зазвичай, знаходяться в масиві таких самих об'єктів, який є колекцією однотипних елементів.
 
-//   Об'єкти можуть зберігати не тільки дані, але і функції для роботи з цими даними - методи.
-// Якщо значення властивості - це функція, така властивість називається методом об'єкта.
+// //   Об'єкти можуть зберігати не тільки дані, але і функції для роботи з цими даними - методи.
+// // Якщо значення властивості - це функція, така властивість називається методом об'єкта.
 
-// // ✅ Логічно і синтаксично згруповані сутності
+// // // ✅ Логічно і синтаксично згруповані сутності
+// // const bookShelf = {
+// //   books: ["Останнє королівство", "Страж снів"],
+// //   // Це метод об'єкта
+// //   getBooks() {
+// //     console.log("Цей метод буде повертати всі книги - властивість books");
+// //   },
+// //   // Це метод об'єкта
+// //   addBook(bookName) {
+// //     console.log("Цей метод буде додавати нову книгу у властивість books");
+// //   },
+// // };
+
+// // // Виклики методів
+// // bookShelf.getBooks();
+// // bookShelf.addBook("Нова книга");
+// // Такі об'єкти можна назвати «моделями». Вони пов'язують дані і методи для роботи з цими даними.
+// //   Наприклад, можна було оголосити змінну books і дві функції getBooks() і addBook(bookName),
+// //     але тоді це були б три незалежні сутності без явного синтаксичного, і зі слабким логічним зв'язком.
+
+// // // ❌ Слабкопозв'язані, незалежні сутності
+// // const books = [];
+// // function getBooks() {}
+// // function addBook() {}
+
+
+
+// // // --------------------------------------------Задача 34-----------------------------------------------------------
 // const bookShelf = {
-//   books: ["Останнє королівство", "Страж снів"],
-//   // Це метод об'єкта
+//   // Change code below this line
+//   books: ["The last kingdom", "The guardian of dreams"],
 //   getBooks() {
-//     console.log("Цей метод буде повертати всі книги - властивість books");
+//     return "Returning all books";
 //   },
-//   // Це метод об'єкта
+  
 //   addBook(bookName) {
-//     console.log("Цей метод буде додавати нову книгу у властивість books");
+//     return `Adding book ${bookName}`;
+//   },
+
+//   removeBook(bookName) {
+//     return `Deleting book ${bookName}`;
+//   },
+
+//   updateBook(oldName, newName) {
+//     return `Updating book ${oldName} to ${newName}`;
+//   },
+//   }
+//   // Change code above this line
+
+// console.log(bookShelf.addBook("Haze"));
+// console.log(bookShelf.getBooks());
+// console.log(bookShelf.updateBook('Sands of dune', 'Dune'));
+
+
+// ДОСТУП ДО ВЛАСТИВОСТЕЙ ОБ'ЄКТА В ЙОГО МЕТОДАХ
+
+// Методи використовуються для роботи з властивостями об'єкта, їх зміни.
+// Для доступу до об'єкта в методі використовується не ім'я змінної, наприклад bookShelf, а ключове слово
+// this - контекст.Значенням this буде об'єкт перед «крапкою», тобто об'єкт, який викликав цей метод,
+// у нашому випадку - це посилання на об'єкт bookShelf.
+
+// const bookShelf = {
+//   books: ["Останнє королівство"],
+//   getBooks() {
+//     console.log(this);
 //   },
 // };
 
-// // Виклики методів
-// bookShelf.getBooks();
-// bookShelf.addBook("Нова книга");
-// Такі об'єкти можна назвати «моделями». Вони пов'язують дані і методи для роботи з цими даними.
-//   Наприклад, можна було оголосити змінну books і дві функції getBooks() і addBook(bookName),
-//     але тоді це були б три незалежні сутності без явного синтаксичного, і зі слабким логічним зв'язком.
+// // Перед крапкою знаходиться об'єкт bookShelf,
+// // тому, викликаючи метод, this буде зберігати посилання на нього.
+// bookShelf.getBooks(); // {books: ["Останнє королівство"], getBooks: f}
+// Для того щоб отримати доступ до властивостей об'єкта в методах, ми звертаємось до нього через this і далі,
+// стандартно - «через крапку» до властивостей.
 
-// // ❌ Слабкопозв'язані, незалежні сутності
-// const books = [];
-// function getBooks() {}
-// function addBook() {}
+// const bookShelf = {
+//   books: ["Останнє королівство"],
+//   getBooks() {
+//     return this.books;
+//   },
+//   addBook(bookName) {
+//     this.books.push(bookName);
+//   },
+//   removeBook(bookName) {
+//     const bookIndex = this.books.indexOf(bookName);
+//     this.books.splice(bookIndex, 1);
+//   },
+// };
+
+// console.log(bookShelf.getBooks()); // []
+// bookShelf.addBook("Імла");
+// bookShelf.addBook("Страж снів");
+// console.log(bookShelf.getBooks()); // ["Останнє королівство", "Імла", "Страж снів"]
+// bookShelf.removeBook("Імла");
+// console.log(bookShelf.getBooks()); // ["Останнє королівство", "Страж снів"]
+// // Логічно замислитися - чому б не використовувати ім'я об'єкта у зверненні до властивостей, адже ми явно не збираємося його змінювати.
+// Справа в тому, що ім'я об'єкта - річ ненадійна, методи одного об'єкта можна копіювати в інший (з іншим ім'ям),
+// а в майбутньому дізнаємось, що часто під час створення об'єкта, ми наперед зовсім не знаємо імені.
+// Використання this гарантує, що метод працює саме з тим об'єктом, який його викликав.
 
 
 
-// // --------------------------------------------Задача 34-----------------------------------------------------------
-const bookShelf = {
-  // Change code below this line
-  books: ["The last kingdom", "The guardian of dreams"],
-  getBooks() {
-    return "Returning all books";
-  },
-  addBook(bookName) {
-    return `Adding book ${bookName}`;
-  },
-  // Change code above this line
-};
+// // // --------------------------------------------Задача 35-----------------------------------------------------------
+// const bookShelf = {
+//   books: ["The last kingdom", "Haze", "The guardian of dreams"],
+//   updateBook(oldName, newName) {
+//     // Change code below this line
+   
+// const bookIndex = this.books.indexOf(oldName);
+//     this.books.splice(bookIndex, 1, newName);
+//     // this.books.push(newName);
+//     // Change code above this line
+//  },
+// };
+
+
+// // // --------------------------------------------Задача 36-----------------------------------------------------------
+// const atTheOldToad = {
+//   // Change code below this line
+//   potions : [],
+//   addPoison(potionsName) {
+//     this.potions.push(potionsName);
+//   },
+//   removePoison(potionsName) {
+//     const potionsIndex = this.potions.indexOf(potionsName);
+//     this.potions.splice(potionsIndex, 1);
+//   },
+
+//   // Change code above this line
+// };
+
+
+// // // --------------------------------------------Задача 37-----------------------------------------------------------
+// const atTheOldToad = {
+//   potions: ["Speed potion", "Dragon breath", "Stone skin"],
+//   // Change code below this line
+//  getPotions() {
+//     return this.potions;
+//   },
+//   // Change code above this line
+// };
+
+// // // --------------------------------------------Задача 38-----------------------------------------------------------
+// const atTheOldToad = {
+//   potions: ["Speed potion", "Dragon breath", "Stone skin"],
+//   addPotion(potionName) {
+//     // Change code below this line
+
+//     this.potions.push(potionName, 1);
+
+//     // Change code above this line
+//   },
+// };
+// console.log(atTheOldToad.addPotion("Invisibility"));
+// console.log(atTheOldToad.potions);
+
+// // // --------------------------------------------Задача 39-----------------------------------------------------------
+
+// const atTheOldToad = {
+//   potions: ["Speed potion", "Dragon breath", "Stone skin"],
+//   removePotion(potionName) {
+//     // Change code below this line
+
+// const potionIndex = this.potions.indexOf(potionName);
+//     this.potions.splice(potionIndex, 1);
+
+//     // Change code above this line
+//   },
+// };
+
+// // // --------------------------------------------Задача 40-----------------------------------------------------------
+// const atTheOldToad = {
+//   potions: ["Speed potion", "Dragon breath", "Stone skin"],
+//   updatePotionName(oldName, newName) {
+//     // Change code below this line
+// const potionIndex = this.potions.indexOf(oldName);
+//     this.potions.splice(potionIndex, 1, newName);
+//     // this.potions.push(newName);
+//     // Change code above this line
+//   },
+// };
+
+// console.log(atTheOldToad.updatePotionName("Dragon breath", "Polymorth"));
+
+
+// // // --------------------------------------------Задача 41-----------------------------------------------------------
+// const atTheOldToad = {
+//   potions: [
+//     { name: "Speed potion", price: 460 },
+//     { name: "Dragon breath", price: 780 },
+//     { name: "Stone skin", price: 520 },
+//   ],
+//   // Change code below this line
+//   getPotions() {
+//     return this.potions;
+//   },
+//   addPotion(newPotion) {
+//     const {potions} = this;
+//     for (const potion of potions){
+//     if (potion.name===newPotion.name) {
+//       return `Error! Potion ${newPotion.name} is already in your inventory!`;
+//     }
+//     }
+
+//     return potions.push(newPotion);
+//   },
+
+//   removePotion(potionName) {
+//     const {potions}=this;
+    
+//     for(let i=0; i<=potions.length; i+=1){
+//       const{name} = this.potions[i];
+//       if (name===potionName){
+//         return potions.splice(i,1);
+//       }
+//     }
+//     return `Potion ${potionName} is not in inventory`;
+//   },
+
+//   updatePotionName(oldName, newName) {
+//     const {potions} = this;
+    
+// for(const potion of potions){
+//     if(oldName===potion.name){
+//     return potion.name = newName;
+//   }
+// }
+//     return `Potion ${oldName} is not in inventory`
+//   },
+//   // Change code above this line
+// };
+
+
+
